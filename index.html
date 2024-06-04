@@ -12,9 +12,9 @@
             <h1>My Portfolio</h1>
             <nav>
                 <ul>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#portfolio">Portfolio</a></li>
-                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#About">About</a></li>
+                    <li><a href="#Portfolio">Portfolio</a></li>
+                    <li><a href="#Contact">Contact</a></li>
                 </ul>
             </nav>
         </div>
@@ -24,7 +24,6 @@
         <div class="container">
             <h2>About Me</h2>
             <p>Welcome to my portfolio website! Here you can learn more about me and my work.</p>
-            <!-- Add more content about yourself -->
         </div>
     </section>
 
@@ -32,8 +31,18 @@
         <div class="container">
             <h2>Portfolio</h2>
             <div class="portfolio-items">
-                <!-- Add portfolio items (projects) here -->
+                <ul>
+                    <iframe width="440" height="220" src="https://www.youtube.com/embed/JtaW6K44sHo?si=FnOqOJpAeHFxZKZk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    <iframe width="440" height="220" src="https://www.youtube.com/embed/73dT3_uMKyw?si=58BVUimY5OcT6lIM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </ul>
             </div>
+        </div>
+    </section>
+
+    <section id="Worked with">
+        <div class="container">
+            <h2>Worked with</h2>
+            <p>These are the people I've worked with:</p>
         </div>
     </section>
 
@@ -41,21 +50,52 @@
         <div class="container">
             <h2>Contact Me</h2>
             <p>If you have any inquiries about my services, please feel free to get in touch by filling out the form below:</p>
-            <form id="contact-form">
+            <form id="contact-form" method="POST" action="http://127.0.0.1:5000/submit_contact">
                 <div class="form-group">
                     <label for="name">Name:</label>
                     <input type="text" id="name" name="name" required>
                 </div>
                 <div class="form-group">
                     <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" required>
+                    <input type="email" id="email" name="email" placeholder="example@example.com" required>
                 </div>
                 <div class="form-group">
                     <label for="message">Message:</label>
-                    <textarea id="message" name="message" required></textarea>
+                    <textarea id="message" name="message" placeholder="Your message here" required></textarea>
                 </div>
                 <button type="submit">Send Message</button>
             </form>
+            <script>
+                document.getElementById('contact-form').addEventListener('submit', function(event) {
+                    event.preventDefault();
+
+                    var name = document.getElementById('name').value;
+                    var email = document.getElementById('email').value;
+                    var message = document.getElementById('message').value;
+
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('POST', 'http://127.0.0.1:5000/submit_contact', true);
+                    xhr.setRequestHeader('Content-Type', 'application/json');
+
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState === 4) {
+                            if (xhr.status === 201) {
+                                alert('Contact submitted successfully!');
+                            } else {
+                                alert('Error submitting contact: ' + xhr.statusText);
+                            }
+                        }
+                    };
+
+                    var data = JSON.stringify({
+                        "name": name,
+                        "email": email,
+                        "message": message
+                    });
+
+                    xhr.send(data);
+                });
+            </script>
         </div>
     </section>
 
@@ -64,7 +104,5 @@
             <p>&copy; 2024 My Portfolio</p>
         </div>
     </footer>
-
-    <script src="script.js"></script>
 </body>
 </html>
